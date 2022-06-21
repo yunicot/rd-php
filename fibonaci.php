@@ -18,5 +18,5 @@ function fibonachi(int $n): float {
 }
 
 $startTime = microtime(true);
-var_dump(fibonachi(100));
+var_dump(fibonachi(50));
 var_dump(microtime(true) - $startTime);
