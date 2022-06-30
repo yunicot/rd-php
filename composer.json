@@ -1,0 +1,15 @@
+{
+    "name": "yunicot/rd-php",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Viacheslav Yepancha",
+            "email": "viacheslav.yepancha@gmail.com"
+        }
+    ],
+    "require": {}
+}

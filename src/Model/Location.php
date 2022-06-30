@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class Location
 {
     public function __construct(
