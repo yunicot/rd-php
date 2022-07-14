@@ -24,4 +24,14 @@ $trainer = new Trainer('Mike Smith');
 //echo $training->getStartAt()->format('Y-m-d H:i:s');
 //
 
-$location = new Location('Ukraine', 'Kyiv', 'Khreschatyk');
+//$location = new Location('Ukraine', 'Kyiv', 'Khreschatyk');
+
+$trainer = new Trainer('Max');
+
+try {
+    $trainer->setBirthday(\DateTime::createFromFormat('Y-m-d', '2008-10-05'));
+} catch (\App\Exception\ValidationException $e) {
+    echo $e->getTraceAsString();
+}
+
+echo $trainer->getBirthday()?->format('d/m/Y') . "\n";
