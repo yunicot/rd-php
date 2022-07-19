@@ -1,7 +1,6 @@
 <?php
 
-use App\Model\Location;
-use App\Model\Trainer;
+use App\Repository\JsonRepository;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -9,29 +8,26 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/bootstrap.php';
 
-$trainer = new Trainer('Mike Smith');
-// 30 07 2022 20:00
-// 2022-07-30T20:00:00.000Z
-//$training = new Training(
-//    'Powerlifting',
-//    DateTime::createFromFormat('d.m.Y H:i', '30.07.2022 20:00')
-//);
-//
-//$training->setTrainers([new Category('Category name')]);
-//
-//echo $training->getTitle();
-//echo '<br>';
-//echo $training->getStartAt()->format('Y-m-d H:i:s');
-//
+function auth(int $id, string $password): bool
+{
+    $repository = new JsonRepository(__DIR__ . '/db/users.json');
+    /** @var \App\Model\User $user */
+    $user = $repository->find($id);
+    var_dump($user);
+    if ($user === null) {
+        return false;
+    }
 
-//$location = new Location('Ukraine', 'Kyiv', 'Khreschatyk');
-
-$trainer = new Trainer('Max');
-
-try {
-    $trainer->setBirthday(\DateTime::createFromFormat('Y-m-d', '2008-10-05'));
-} catch (\App\Exception\ValidationException $e) {
-    echo $e->getTraceAsString();
+    return $user->getPassword() === md5($password . $user->getSalt());
 }
 
-echo $trainer->getBirthday()?->format('d/m/Y') . "\n";
+$repository = new JsonRepository(__DIR__ . '/db/users.json');
+//$user = new \App\Model\User('Viacheslav', 'test@test.com');
+//$user->setPassword('qwerty123');
+//$user = $repository->create($user);
+
+if (auth(1, 'qwerty123')) {
+    echo 'You passed correct creds';
+} else {
+    echo 'Incorrect password';
+}
