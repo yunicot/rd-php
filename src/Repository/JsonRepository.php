@@ -14,6 +14,16 @@ class JsonRepository
     ) {
     }
 
+    public function findAll(): array
+    {
+        $users = json_decode(file_get_contents($this->filePath), true);
+
+        return array_map(
+            static fn(array $user) => User::createFromStorage($user),
+            $users
+        );
+    }
+
     public function find(int $id): ?ModelInterface
     {
         $users = json_decode(file_get_contents($this->filePath), true);
@@ -25,7 +35,7 @@ class JsonRepository
         return null;
     }
 
-    public function create(ModelInterface $model): object
+    public function create(ModelInterface $model): ModelInterface
     {
         $users = file_get_contents($this->filePath);
         $oldUsers = json_decode($users, true);

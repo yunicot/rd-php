@@ -6,7 +6,7 @@ namespace App\Model;
 
 use App\Util\Str;
 
-class User implements ModelInterface
+class User implements ModelInterface, \JsonSerializable
 {
     private ?int $id = null;
     private ?\DateTime $birthday = null;
@@ -116,7 +116,7 @@ class User implements ModelInterface
         return $this->salt;
     }
 
-    public function setSalt(string $salt): self
+    public function setSalt(?string $salt): self
     {
         $this->salt = $salt;
 
@@ -140,18 +140,23 @@ class User implements ModelInterface
     public static function createFromStorage(array $data): self
     {
         $user = new User($data['name'], $data['email'] ?? '');
-        $user->setGender($data['gender'])
-            ->setId($data['id'])
+        $user->setGender($data['gender'] ?? null)
+            ->setId($data['id'] ?? null)
             ->setEmail($data['email'])
-            ->setPhone($data['phone'])
-            ->setSalt($data['salt'])
+            ->setPhone($data['phone'] ?? null)
+            ->setSalt($data['salt'] ?? null)
         ;
 
-        $user->password = $data['password'];
-        if ($data['birthday'] !== null) {
+        $user->password = $data['password'] ?? null;
+        if (($data['birthday'] ?? null) !== null) {
             $user->setBirthday((new \DateTime())->setTimezone($data['birthday']));
         }
 
         return $user;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->toStorage();
     }
 }
