@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.red {
+    background-color: #f00;
+}
+
+.green {
+    background-color: #0f0;
+}
+
+.blue {
+    background-color: #00f;
+}
+
+.container {
+    display: flex;
+}
+
+.color-blocks > div {
+    min-height: 100px;
+    padding: 30px;
+}
