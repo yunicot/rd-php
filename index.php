@@ -10,6 +10,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 $routes = array_merge(
     include(__DIR__ . '/routes/api.php'),
+    include(__DIR__ . '/routes/web.php'),
 );
 
 //function auth(int $id, string $password): bool
@@ -37,16 +38,14 @@ $routes = array_merge(
 //}
 
 
-$uri = $_SERVER['REQUEST_URI'];
+$uri = $_SERVER['PATH_INFO'];
 $method = mb_strtolower($_SERVER['REQUEST_METHOD']);
 
 $response = null;
+
 if (isset($routes[$uri][$method])) {
-    $data = json_decode(file_get_contents('php://input') ?? '{}', true);
     $controller = new $routes[$uri][$method]['controller'];
     $controllerMethod = $routes[$uri][$method]['method'];
-    $response = $controller->$controllerMethod($data);
+    $response = $controller->$controllerMethod();
 }
-
-header('Content-Type: application/json');
-echo json_encode($response);
+echo $response;
