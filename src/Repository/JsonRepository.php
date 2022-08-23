@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Model\ModelInterface;
 use App\Model\User;
 
-class JsonRepository
+class JsonRepository implements RepositoryInterface
 {
     public function __construct(
         private string $filePath
@@ -35,7 +35,7 @@ class JsonRepository
         return null;
     }
 
-    public function create(ModelInterface $model): ModelInterface
+    public function create(ModelInterface $model): ?ModelInterface
     {
         $users = file_get_contents($this->filePath);
         $oldUsers = json_decode($users, true);
@@ -53,12 +53,12 @@ class JsonRepository
         return $model;
     }
 
-    public function update(object $model): object
+    public function update(ModelInterface $model): ModelInterface
     {
 
     }
 
-    public function delete(mixed $id): mixed
+    public function delete(mixed $id): ?ModelInterface
     {
 
     }

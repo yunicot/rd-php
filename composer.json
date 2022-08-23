@@ -11,5 +11,7 @@
             "email": "viacheslav.yepancha@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/dotenv": "^6.1"
+    }
 }

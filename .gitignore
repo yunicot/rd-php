@@ -1,3 +1,6 @@
 /.idea
 /challenge
 /vendor/
+
+.env.local
+.env.*.local

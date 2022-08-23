@@ -51,7 +51,7 @@ class User implements ModelInterface, \JsonSerializable
         return $this->birthday;
     }
 
-    public function setBirthday(\DateTime $birthday): self
+    public function setBirthday(?\DateTime $birthday): self
     {
         $this->birthday = $birthday;
 
