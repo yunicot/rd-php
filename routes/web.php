@@ -16,4 +16,10 @@
                 'method' => 'sendContactForm',
             ],
         ],
+        '/developers/(?<id>\d+)' => [
+            'get' => [
+                'controller' => \App\Controller\DeveloperController::class,
+                'method' => 'getDeveloper',
+            ],
+        ],
     ];

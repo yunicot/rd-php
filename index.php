@@ -17,9 +17,18 @@ $method = mb_strtolower($_SERVER['REQUEST_METHOD']);
 
 $response = null;
 
-if (isset($routes[$uri][$method])) {
-    $controller = new $routes[$uri][$method]['controller'];
-    $controllerMethod = $routes[$uri][$method]['method'];
-    $response = $controller->$controllerMethod();
+foreach ($routes as $routeUri => $route) {
+    $routeUri = addcslashes($routeUri, '/');
+    preg_match("/^$routeUri$/", $uri, $params);
+    if (count($params) > 0) {
+        $controller = new $route[$method]['controller'];
+        $controllerMethod = $route[$method]['method'];
+        $response = $controller->$controllerMethod($params);
+//        $response = $controller->$controllerMethod(
+//            ...array_filter($params, fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY)
+//        );
+        break;
+    }
 }
+
 echo $response;
